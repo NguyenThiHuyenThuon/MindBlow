@@ -37,7 +37,6 @@
             justify-content: flex-end;
             width: 100%;
             padding: 0;
-
         }
 
         .sign a {
@@ -56,16 +55,17 @@
 
         .sign a:hover {
             background-color: #496679;
-            box-shadow: 0 8px 20px rgba(73, 102, 121, 0.4); 
+            box-shadow: 0 8px 20px rgba(82, 95, 104, 0.605); 
             border-color: #093149;
         }
 
         .welcome-screen{
+            margin-top: 60px;
             margin-bottom: 30px;
             background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 40px; 
+            padding: 20px; 
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -76,6 +76,7 @@
             animation: fadeInSlideUp 1s forwards ease-out;
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-sizing: border-box;
+            
         }
 
         @keyframes fadeInSlideUp {
@@ -126,12 +127,6 @@
             transition: background-color 0.3s ease;
         }
 
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
 
         .features {
             display: flex;
@@ -285,9 +280,9 @@
     </div>
 
     <div class="welcome-screen">
-         <img src="InkedGemini_Generated_Image_r9fh3ir9fh3ir9fh_LI.jpg" alt="MindCompanion Logo">
+        <img src="InkedGemini_Generated_Image_r9fh3ir9fh3ir9fh_LI.jpg" alt="MindCompanion Logo">
         <h1>Chào Mừng Đến Với MindCompanion</h1>
-            </div>
+    </div>
     
     <div class="features">
     <div class="feature-item" onclick="goToNoteScreen()">
@@ -345,28 +340,22 @@
         }
 
         function goToLogin() {
-            // Add smooth transition effect
-            alert('Tính năng Đăng Nhập sẽ được cập nhật sớm!');
+            document.querySelector('.welcome-screen').style.transform = 'translateX(-100%)';
+            document.querySelector('.welcome-screen').style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = 'SignInScreen.html';
+            }, 500);
         }
 
         function goToRegister() {
-            // Add smooth transition effect
-            alert('Tính năng Đăng Ký sẽ được cập nhật sớm!');
+            document.querySelector('.welcome-screen').style.transform = 'translateX(-100%)';
+            document.querySelector('.welcome-screen').style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = 'RegisterScreen.html';
+            }, 500);
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const featureItems = document.querySelectorAll('.feature-item');
-            featureItems.forEach((item, index) => {
-                item.addEventListener('click', function() {
-                    switch(index) {
-                        case 0: goToNoteScreen(); break;
-                        case 1: goToStatsScreen(); break;
-                        case 2: goToGoalsScreen(); break;
-                        case 3: goToChatScreen(); break;
-                    }
-                });
-            });
-        });    
 
         // Add loading animation
         window.addEventListener('load', function() {
