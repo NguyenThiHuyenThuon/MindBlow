@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện Tài Nguyên - MindCompanion</title>
+    <link rel="icon" type="image/jpg" href="InkedGemini_Generated_Image_r9fh3ir9fh3ir9fh_LI.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #1d3557;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            background: #457b9d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: #1d3557;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .category-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+
+        .category-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #1d3557;
+        }
+
+        .category-desc {
+            color: #457b9d;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .resource-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .resource-item {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(168, 218, 220, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(69, 123, 157, 0.2);
+        }
+
+        .resource-item:hover {
+            background: rgba(69, 123, 157, 0.2);
+            transform: translateX(5px);
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .resource-name {
+            font-weight: 500;
+            color: #1d3557;
+            margin-bottom: 4px;
+        }
+
+        .resource-duration {
+            font-size: 0.85em;
+            color: #457b9d;
+        }
+
+        .resource-action {
+            padding: 8px 16px;
+            background: #457b9d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+        }
+
+        .resource-action:hover {
+            background: #1d3557;
+        }
+
+        .audio-player {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            border: 1px solid rgba(69, 123, 157, 0.3);
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #457b9d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            background: #1d3557;
+        }
+
+        .volume-control {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #1d3557;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+        }
+
+        .close-btn:hover {
+            color: #1d3557;
+        }
+
+        .exercise-content {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .exercise-steps {
+            margin: 20px 0;
+        }
+
+        .exercise-step {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(168, 218, 220, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #457b9d;
+        }
+
+        .breathing-timer {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .timer-display {
+            font-size: 3em;
+            font-weight: 700;
+            color: #457b9d;
+            margin: 20px 0;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .timer-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn {
+            background: #457b9d;
+            color: white;
+        }
+
+        .stop-btn {
+            background: #e63946;
+            color: white;
+        }
+
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .timer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .categories {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .category-card {
+                padding: 20px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Thư Viện Tài Nguyên</h1>
+            <a href="WelcomeScreen.html" class="back-btn">← Quay Lại</a>
+        </div>
+
+        <div class="categories">
+            <!-- Âm thanh thư giãn -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🎵</div>
+                    <div class="category-title">Âm Thanh Thư Giãn</div>
+                </div>
+                <div class="category-desc">
+                    Kho các bản nhạc không lời và âm thanh thiên nhiên giúp bạn thư giãn và giảm stress.
+                </div>
+                <div class="resource-list">
+                    <div class="resource-item" onclick="playAudio('rain')">
+                        <div class="resource-info">
+                            <div class="resource-name">🌧️ Tiếng Mưa Rơi</div>
+                            <div class="resource-duration">30 phút</div>
+                        </div>
+                        <button class="resource-action">Phát</button>
+                    </div>
+                    <div class="resource-item" onclick="playAudio('ocean')">
+                        <div class="resource-info">
+                            <div class="resource-name">🌊 Sóng Biển</div>
+                            <div class="resource-duration">45 phút</div>
+                        </div>
+                        <button class="resource-action">Phát</button>
+                    </div>
+                    <div class="resource-item" onclick="playAudio('forest')">
+                        <div class="resource-info">
+                            <div class="resource-name">🦜 Tiếng Chim Trong Rừng</div>
+                            <div class="resource-duration">25 phút</div>
+                        </div>
+                        <button class="resource-action">Phát</button>
+                    </div>
+                    <div class="resource-item" onclick="playAudio('meditation')">
+                        <div class="resource-info">
+                            <div class="resource-name">🧘 Nhạc Thiền</div>
+                            <div class="resource-duration">60 phút</div>
+                        </div>
+                        <button class="resource-action">Phát</button>
+                    </div>
+                </div>
+                
+                <div id="audioPlayer" class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-btn" onclick="togglePlay()">▶️</button>
+                        <span id="currentTrack">Chọn bản nhạc</span>
+                        <input type="range" class="volume-control" min="0" max="100" value="50" onchange="setVolume(this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bài tập thực hành -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🧘‍♀️</div>
+                    <div class="category-title">Bài Tập Thực Hành</div>
+                </div>
+                <div class="category-desc">
+                    Hướng dẫn các bài tập hít thở, thiền định và thư giãn đơn giản.
+                </div>
+                <div class="resource-list">
+                    <div class="resource-item" onclick="openExercise('breathing')">
+                        <div class="resource-info">
+                            <div class="resource-name">🌬️Hít Thở 4-7-8</div>
+                            <div class="resource-duration">5-10 phút</div>
+                        </div>
+                        <button class="resource-action">Bắt Đầu</button>
+                    </div>
+                    <div class="resource-item" onclick="openExercise('meditation')">
+                        <div class="resource-info">
+                            <div class="resource-name">🧘 Thiền Chánh Niệm</div>
+                            <div class="resource-duration">10-15 phút</div>
+                        </div>
+                        <button class="resource-action">Bắt Đầu</button>
+                    </div>
+                    <div class="resource-item" onclick="openExercise('bodyscan')">
+                        <div class="resource-info">
+                            <div class="resource-name">💆 Thư Giãn Toàn Thân</div>
+                            <div class="resource-duration">15-20 phút</div>
+                        </div>
+                        <button class="resource-action">Bắt Đầu</button>
+                    </div>
+                    <div class="resource-item" onclick="openExercise('gratitude')">
+                        <div class="resource-info">
+                            <div class="resource-name">🙏 Thiền Biết Ơn</div>
+                            <div class="resource-duration">5-10 phút</div>
+                        </div>
+                        <button class="resource-action">Bắt Đầu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nội dung giáo dục -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">📖</div>
+                    <div class="category-title">Nội Dung Giáo Dục</div>
+                </div>
+                <div class="category-desc">
+                    Các bài viết hữu ích về sức khỏe tinh thần và kỹ năng tự chăm sóc bản thân.
+                </div>
+                <div class="resource-list">
+                    <div class="resource-item" onclick="openArticle('stress')">
+                        <div class="resource-info">
+                            <div class="resource-name">😰 Quản Lý Stress Hiệu Quả</div>
+                            <div class="resource-duration">5 phút đọc</div>
+                        </div>
+                        <button class="resource-action">Đọc</button>
+                    </div>
+                    <div class="resource-item" onclick="openArticle('sleep')">
+                        <div class="resource-info">
+                            <div class="resource-name">😴 Cải Thiện Giấc Ngủ</div>
+                            <div class="resource-duration">7 phút đọc</div>
+                        </div>
+                        <button class="resource-action">Đọc</button>
+                    </div>
+                    <div class="resource-item" onclick="openArticle('nutrition')">
+                        <div class="resource-info">
+                            <div class="resource-name">🥗 Dinh Dưỡng Cho Tinh Thần</div>
+                            <div class="resource-duration">6 phút đọc</div>
+                        </div>
+                        <button class="resource-action">Đọc</button>
+                    </div>
+                    <div class="resource-item" onclick="openArticle('selfcare')">
+                        <div class="resource-info">
+                            <div class="resource-name">💖 Tự Chăm Sóc Bản Thân</div>
+                            <div class="resource-duration">8 phút đọc</div>
+                        </div>
+                        <button class="resource-action">Đọc</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal cho bài tập -->
+    <div id="exerciseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="exerciseTitle" class="modal-title"></h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="exerciseContent" class="exercise-content"></div>
+        </div>
+    </div>
+
+    <!-- Modal cho bài viết -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="articleTitle" class="modal-title"></h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="articleContent" class="exercise-content"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentAudio = null;
+        let isPlaying = false;
+        let breathingTimer = null;
+        let breathingCount = 0;
+
+        // Âm thanh thư giãn
+        function playAudio(type) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            const currentTrack = document.getElementById('currentTrack');
+            
+            // Dừng audio hiện tại nếu có
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            
+            // Hiển thị player
+            audioPlayer.style.display = 'block';
+            
+            // Cập nhật tên bản nhạc
+            const trackNames = {
+                'rain': '🌧️ Tiếng Mưa Rơi',
+                'ocean': '🌊 Sóng Biển',
+                'forest': '🦜 Tiếng Chim Trong Rừng',
+                'meditation': '🧘 Nhạc Thiền'
+            };
+            
+            currentTrack.textContent = trackNames[type] || 'Âm thanh thư giãn';
+            
+            // Tạo audio giả lập (trong thực tế sẽ load file âm thanh thật)
+            // currentAudio = new Audio(`audio/${type}.mp3`);
+            
+            // Demo: hiển thị thông báo
+            alert(`Đang phát: ${trackNames[type]}\n\n(Trong phiên bản thực tế, âm thanh sẽ được phát từ file MP3)`);
+        }
+
+        function togglePlay() {
+            const playBtn = document.querySelector('.play-btn');
+            
+            if (isPlaying) {
+                playBtn.textContent = '▶️';
+                isPlaying = false;
+                if (currentAudio) currentAudio.pause();
+            } else {
+                playBtn.textContent = '⏸️';
+                isPlaying = true;
+                if (currentAudio) currentAudio.play();
+            }
+        }
+
+        function setVolume(value) {
+            if (currentAudio) {
+                currentAudio.volume = value / 100;
+            }
+        }
+
+        // Bài tập thực hành
+        function openExercise(type) {
+            const modal = document.getElementById('exerciseModal');
+            const title = document.getElementById('exerciseTitle');
+            const content = document.getElementById('exerciseContent');
+            
+            const exercises = {
+                'breathing': {
+                    title: '🫁 Bài Tập Hít Thở 4-7-8',
+                    content: `
+                        <p>Bài tập hít thở 4-7-8 là một kỹ thuật thư giãn đơn giản và hiệu quả giúp giảm căng thẳng và cải thiện giấc ngủ.</p>
+                        
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>Bước 1:</strong> Ngồi hoặc nằm thoải mái, thở ra hoàn toàn qua miệng
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 2:</strong> Đóng miệng, hít vào qua mũi trong 4 giây
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 3:</strong> Nín thở trong 7 giây
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 4:</strong> Thở ra qua miệng trong 8 giây (tạo tiếng "whoosh")
+                            </div>
+                        </div>
+                        
+                        <div class="breathing-timer">
+                            <div class="timer-display" id="timerDisplay">00:00</div>
+                            <div class="timer-controls">
+                                <button class="timer-btn start-btn" onclick="startBreathingTimer()">Bắt Đầu</button>
+                                <button class="timer-btn stop-btn" onclick="stopBreathingTimer()">Dừng</button>
+                                <button class="timer-btn reset-btn" onclick="resetBreathingTimer()">Đặt Lại</button>
+                            </div>
+                            <p id="breathingInstruction">Nhấn "Bắt Đầu" để bắt đầu bài tập</p>
+                        </div>
+                    `
+                },
+                'meditation': {
+                    title: '🧘 Thiền Chánh Niệm',
+                    content: `
+                        <p>Thiền chánh niệm giúp bạn tập trung vào hiện tại và giảm lo lắng.</p>
+                        
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>Bước 1:</strong> Tìm một nơi yên tĩnh, ngồi thoải mái
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 2:</strong> Nhắm mắt hoặc nhìn một điểm cố định
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 3:</strong> Tập trung vào hơi thở tự nhiên
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 4:</strong> Khi tâm trí lang thang, nhẹ nhàng đưa sự chú ý về hơi thở
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 5:</strong> Tiếp tục trong 10-15 phút
+                            </div>
+                        </div>
+                        
+                        <p><strong>Mẹo:</strong> Bắt đầu với 5 phút mỗi ngày và tăng dần thời gian.</p>
+                    `
+                },
+                'bodyscan': {
+                    title: '💆 Thư Giãn Toàn Thân',
+                    content: `
+                        <p>Bài tập thư giãn toàn thân giúp giải tỏa căng thẳng từ đầu đến chân.</p>
+                        
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>Bước 1:</strong> Nằm ngửa thoải mái, tay để dọc thân
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 2:</strong> Bắt đầu từ đầu, chú ý đến cảm giác từng vùng
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 3:</strong> Căng cơ trong 5 giây, sau đó thả lỏng
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 4:</strong> Di chuyển xuống: mặt → vai → tay → ngực → bụng → chân
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 5:</strong> Cảm nhận sự thư giãn lan tỏa khắp cơ thể
+                            </div>
+                        </div>
+                        
+                        <p><strong>Lợi ích:</strong> Giảm căng thẳng cơ bắp, cải thiện giấc ngủ và tăng cường nhận thức cơ thể.</p>
+                    `
+                },
+                'gratitude': {
+                    title: '🙏 Thiền Biết Ơn',
+                    content: `
+                        <p>Thiền biết ơn giúp tăng cường tâm trạng tích cực và hạnh phúc.</p>
+                        
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>Bước 1:</strong> Ngồi thoải mái, thở sâu 3 lần
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 2:</strong> Nghĩ về 3 điều bạn biết ơn hôm nay
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 3:</strong> Cảm nhận từng điều một cách sâu sắc
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 4:</strong> Gửi lòng biết ơn đến những người thân yêu
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Bước 5:</strong> Kết thúc bằng việc biết ơn chính bản thân
+                            </div>
+                        </div>
+                        
+                        <p><strong>Gợi ý:</strong> Có thể viết ra giấy 3 điều biết ơn mỗi ngày để tăng hiệu quả.</p>
+                    `
+                }
+            };
+            
+            if (exercises[type]) {
+                title.textContent = exercises[type].title;
+                content.innerHTML = exercises[type].content;
+                modal.style.display = 'block';
+            }
+        }
+
+        // Bài viết giáo dục
+        function openArticle(type) {
+            const modal = document.getElementById('articleModal');
+            const title = document.getElementById('articleTitle');
+            const content = document.getElementById('articleContent');
+            
+            const articles = {
+                'stress': {
+                    title: '😰 Quản Lý Stress Hiệu Quả',
+                    content: `
+                        <h3>Stress là gì?</h3>
+                        <p>Stress là phản ứng tự nhiên của cơ thể trước những thách thức hoặc áp lực. Tuy nhiên, stress kéo dài có thể ảnh hưởng xấu đến sức khỏe.</p>
+                        
+                        <h3>Dấu hiệu của stress:</h3>
+                        <ul>
+                            <li>Cảm thấy lo lắng, bồn chồn</li>
+                            <li>Khó tập trung</li>
+                            <li>Mệt mỏi thường xuyên</li>
+                            <li>Thay đổi thói quen ăn uống hoặc ngủ</li>
+                            <li>Đau đầu, căng cơ</li>
+                        </ul>
+                        
+                        <h3>Cách quản lý stress:</h3>
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>1. Thở sâu:</strong> Dành 5-10 phút mỗi ngày để thực hành hít thở sâu
+                            </div>
+                            <div class="exercise-step">
+                                <strong>2. Tập thể dục:</strong> Vận động nhẹ nhàng như đi bộ, yoga
+                            </div>
+                            <div class="exercise-step">
+                                <strong>3. Tổ chức thời gian:</strong> Lập kế hoạch và ưu tiên công việc
+                            </div>
+                            <div class="exercise-step">
+                                <strong>4. Kết nối xã hội:</strong> Chia sẻ với bạn bè, gia đình
+                            </div>
+                            <div class="exercise-step">
+                                <strong>5. Nghỉ ngơi:</strong> Đảm bảo ngủ đủ 7-8 tiếng mỗi đêm
+                            </div>
+                        </div>
+                        
+                        <p><strong>Nhớ rằng:</strong> Nếu stress kéo dài và ảnh hưởng nghiêm trọng đến cuộc sống, hãy tìm kiếm sự hỗ trợ từ chuyên gia.</p>
+                    `
+                },
+                'sleep': {
+                    title: '😴 Cải Thiện Giấc Ngủ',
+                    content: `
+                        <h3>Tại sao giấc ngủ quan trọng?</h3>
+                        <p>Giấc ngủ chất lượng giúp phục hồi cơ thể, tăng cường trí nhớ và cải thiện tâm trạng.</p>
+                        
+                        <h3>Thói quen tốt cho giấc ngủ:</h3>
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>Thời gian cố định:</strong> Đi ngủ và thức dậy cùng giờ mỗi ngày
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Môi trường ngủ:</strong> Phòng tối, mát mẻ và yên tĩnh
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Tránh thiết bị điện tử:</strong> Không dùng điện thoại 1 giờ trước khi ngủ
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Thư giãn:</strong> Đọc sách, nghe nhạc nhẹ hoặc thiền
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Tránh caffeine:</strong> Không uống cà phê sau 2 giờ chiều
+                            </div>
+                        </div>
+                        
+                        <h3>Khi khó ngủ:</h3>
+                        <ul>
+                            <li>Thực hành hít thở 4-7-8</li>
+                            <li>Nghe âm thanh thiên nhiên</li>
+                            <li>Viết nhật ký để "trút bỏ" lo lắng</li>
+                            <li>Thử kỹ thuật thư giãn cơ bắp</li>
+                        </ul>
+                    `
+                },
+                'nutrition': {
+                    title: '🥗 Dinh Dưỡng Cho Tinh Thần',
+                    content: `
+                        <h3>Mối liên hệ giữa dinh dưỡng và tâm trạng</h3>
+                        <p>Những gì bạn ăn có thể ảnh hưởng trực tiếp đến tâm trạng, năng lượng và khả năng tập trung.</p>
+                        
+                        <h3>Thực phẩm tốt cho tinh thần:</h3>
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>Omega-3:</strong> Cá hồi, cá thu, hạt chia, quả óc chó
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Carbohydrate phức hợp:</strong> Yến mạch, gạo lứt, khoai lang
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Protein nạc:</strong> Gà, trứng, đậu phụ, đậu lăng
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Trái cây và rau xanh:</strong> Rau bina, quả mọng, chuối
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Nước:</strong> Uống đủ 8 cốc nước mỗi ngày
+                            </div>
+                        </div>
+                        
+                        <h3>Thực phẩm nên hạn chế:</h3>
+                        <ul>
+                            <li>Đường tinh luyện và kẹo</li>
+                            <li>Thực phẩm chế biến sẵn</li>
+                            <li>Caffeine quá nhiều</li>
+                            <li>Rượu bia</li>
+                        </ul>
+                        
+                        <h3>Mẹo thực tế:</h3>
+                        <p>Ăn nhiều bữa nhỏ trong ngày, không bỏ bữa sáng, và chuẩn bị đồ ăn nhẹ lành mạnh.</p>
+                    `
+                },
+                'selfcare': {
+                    title: '💖 Tự Chăm Sóc Bản Thân',
+                    content: `
+                        <h3>Tự chăm sóc bản thân là gì?</h3>
+                        <p>Tự chăm sóc bản thân là việc chủ động thực hiện các hoạt động giúp duy trì và cải thiện sức khỏe thể chất, tinh thần và cảm xúc.</p>
+                        
+                        <h3>Các khía cạnh của tự chăm sóc:</h3>
+                        <div class="exercise-steps">
+                            <div class="exercise-step">
+                                <strong>Thể chất:</strong> Tập thể dục, ăn uống lành mạnh, ngủ đủ giấc
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Tinh thần:</strong> Thiền, đọc sách, học hỏi điều mới
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Cảm xúc:</strong> Ghi nhật ký, nói chuyện với bạn bè
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Xã hội:</strong> Dành thời gian với người thân, tham gia hoạt động cộng đồng
+                            </div>
+                            <div class="exercise-step">
+                                <strong>Tâm linh:</strong> Cầu nguyện, thiền, kết nối với thiên nhiên
+                            </div>
+                        </div>
+                        
+                        <h3>Ý tưởng tự chăm sóc hàng ngày:</h3>
+                        <ul>
+                            <li>Dành 10 phút thiền hoặc thư giãn</li>
+                            <li>Viết 3 điều biết ơn</li>
+                            <li>Nghe nhạc yêu thích</li>
+                            <li>Tắm nước ấm</li>
+                            <li>Đi dạo ngoài trời</li>
+                            <li>Gọi điện cho người thân</li>
+                        </ul>
+                        
+                        <p><strong>Nhớ rằng:</strong> Tự chăm sóc bản thân không phải là ích kỷ, mà là cần thiết để bạn có thể chăm sóc tốt những người khác.</p>
+                    `
+                }
+            };
+            
+            if (articles[type]) {
+                title.textContent = articles[type].title;
+                content.innerHTML = articles[type].content;
+                modal.style.display = 'block';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('exerciseModal').style.display = 'none';
+            document.getElementById('articleModal').style.display = 'none';
+            
+            // Dừng timer nếu đang chạy
+            if (breathingTimer) {
+                clearTimeout(breathingTimer);
+                breathingTimer = null;
+            }
+        }
+
+        // Timer cho bài tập hít thở
+        function startBreathingTimer() {
+            const instruction = document.getElementById('breathingInstruction');
+            const timerDisplay = document.getElementById('timerDisplay');
+            
+            breathingCount = 0;
+            
+            function breathingCycle() {
+                if (breathingCount >= 4) {
+                    instruction.textContent = "Hoàn thành! Bạn đã thực hiện 4 chu kỳ hít thở.";
+                    return;
+                }
+                
+                breathingCount++;
+                
+                // Hít vào (4 giây)
+                instruction.textContent = `Chu kỳ ${breathingCount}/4 - Hít vào qua mũi (4 giây)`;
+                let countdown = 4;
+                timerDisplay.textContent = `00:0${countdown}`;
+                
+                const inhaleTimer = setInterval(() => {
+                    countdown--;
+                    timerDisplay.textContent = `00:0${countdown}`;
+                    if (countdown === 0) {
+                        clearInterval(inhaleTimer);
+                        
+                        // Nín thở (7 giây)
+                        instruction.textContent = `Chu kỳ ${breathingCount}/4 - Nín thở (7 giây)`;
+                        countdown = 7;
+                        
+                        const holdTimer = setInterval(() => {
+                            countdown--;
+                            timerDisplay.textContent = `00:0${countdown}`;
+                            if (countdown === 0) {
+                                clearInterval(holdTimer);
+                                
+                                // Thở ra (8 giây)
+                                instruction.textContent = `Chu kỳ ${breathingCount}/4 - Thở ra qua miệng (8 giây)`;
+                                countdown = 8;
+                                
+                                const exhaleTimer = setInterval(() => {
+                                    countdown--;
+                                    timerDisplay.textContent = `00:0${countdown}`;
+                                    if (countdown === 0) {
+                                        clearInterval(exhaleTimer);
+                                        
+                                        // Chuyển sang chu kỳ tiếp theo
+                                        setTimeout(breathingCycle, 1000);
+                                    }
+                                }, 1000);
+                            }
+                        }, 1000);
+                    }
+                }, 1000);
+            }
+            
+            breathingCycle();
+        }
+
+        function stopBreathingTimer() {
+            if (breathingTimer) {
+                clearTimeout(breathingTimer);
+                breathingTimer = null;
+            }
+            document.getElementById('breathingInstruction').textContent = "Đã dừng bài tập";
+        }
+
+        function resetBreathingTimer() {
+            stopBreathingTimer();
+            breathingCount = 0;
+            document.getElementById('timerDisplay').textContent = "00:00";
+            document.getElementById('breathingInstruction').textContent = "Nhấn \"Bắt Đầu\" để bắt đầu bài tập";
+        }
+
+        // Đóng modal khi click bên ngoài
+        window.onclick = function(event) {
+            const exerciseModal = document.getElementById('exerciseModal');
+            const articleModal = document.getElementById('articleModal');
+            
+            if (event.target === exerciseModal) {
+                closeModal();
+            }
+            if (event.target === articleModal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -43,6 +43,7 @@
         }
 
         .card {
+            margin-top: 80px;
             background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -63,12 +64,24 @@
             color: #1d3557;
             margin: 0;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
         }
 
         .header p {
             font-size: 1.2em;
             color: #457b9d;
             margin: 10px 0 0 0;
+        }
+
+        .header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .entry-form h2,
@@ -139,7 +152,7 @@
             border-radius: 5px;
             background: #a8dadc;
             outline: none;
-            -webkit-appearance: none;
+            
         }
 
         .energy-slider::-webkit-slider-thumb {
@@ -331,7 +344,10 @@
 <body>
     <div class="container">
         <div class="card header">
-            <h1>Nhật Ký Cảm Xúc & Năng Lượng</h1>
+            <h1>
+                <img src="InkedGemini_Generated_Image_r9fh3ir9fh3ir9fh_LI.jpg" alt="MindCompanion Logo">
+                Nhật Ký Cảm Xúc & Năng Lượng
+            </h1>
             <p>Ghi lại và theo dõi trạng thái tinh thần của bạn mỗi ngày</p>
         </div>
 

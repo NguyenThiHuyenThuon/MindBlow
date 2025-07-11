@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chào Mừng Đến Với Mind Companion</title>
+    <link rel="icon" type="image/jpg" href="InkedGemini_Generated_Image_r9fh3ir9fh3ir9fh_LI.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{box-sizing: border-box;}
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 1s forwards ease-out;
+        }
+
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    
+
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+         .header h1 {
+            font-size: 1em;
+            color: #1d3557;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .header p {
+            font-size: 0.3em;
+            color: #457b9d;
+            margin: 10px 0 0 0;
+        }
+
+        .header img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar {
+            color: #093149;
+            /* font-style: italic; */
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            margin-left: 100px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px #496679 solid;
+            border-radius: 20px;
+            padding: 8px 16px;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+            max-width: 300;
+        }
+        .search-bar:focus {
+            border-color: #457b9d;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        .search-bar::placeholder {
+            color: #8da0ad;
+        }
+        .search-button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            color: #457b9d;
+            /*cursor: pointer;*/
+            transition: color 0.3s ease;
+        }
+
+        .search-button:hover {
+            color: #1d3557;
+        }
+        /* bạn thường nghe */
+        /* list đề cử */
+        /* nhiều người cũng đang nghe */
+        /* list nhạc của bạn */
+    </style>
+</head>
+<body>
+    <div class="card header">
+        <h1> 
+            <img src="InkedGemini_Generated_Image_r9fh3ir9fh3ir9fh_LI.jpg" alt="MindCompanion Logo">                  
+            Âm thanh thư giãn
+        </h1>
+        <p>Kho các bản nhạc giúp bạn thư giãn tinh thần</p>
+    </div>
+
+    
+
+    <script>
+        function searchMusic(query) {
+            // Tìm kiếm real-time khi người dùng gõ
+            console.log('Searching for:', query);
+            // Implement search logic here
+        }
+
+        function performSearch() {
+            const searchValue = document.querySelector('.search-bar').value;
+            console.log('Performing search for:', searchValue);
+            // Implement search action here
+        }
+
+    </script>
+    
+</body>
+</html>

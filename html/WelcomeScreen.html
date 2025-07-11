@@ -295,10 +295,10 @@
         <div class="feature-title">Thống Kê</div>
         <div class="feature-desc">Xem xu hướng và phân tích tâm trạng</div>
     </div>
-    <div class="feature-item" onclick="goToGoalsScreen()">
-        <div class="feature-icon">🎯</div>
-        <div class="feature-title">Mục Tiêu</div>
-        <div class="feature-desc">Đặt và theo dõi mục tiêu sức khỏe tinh thần</div>
+    <div class="feature-item" onclick="goToLibraryScreen()">
+        <div class="feature-icon">📚</div>
+        <div class="feature-title">Thư Viện Tài Nguyên</div>
+        <div class="feature-desc">Truy cập tài liệu và nguồn thông tin hữu ích</div>
     </div>
     <div class="feature-item" onclick="goToChatScreen()">
         <div class="feature-icon">💬</div>
@@ -321,8 +321,13 @@
             alert('Tính năng Thống Kê sẽ được cập nhật sớm!');
         }
 
-        function goToGoalsScreen() {
-            alert('Tính năng Mục Tiêu sẽ được cập nhật sớm!');
+        function goToLibraryScreen() {
+            document.querySelector('.welcome-screen').style.transform = 'translateX(-100%)';
+            document.querySelector('.welcome-screen').style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = 'LibraryScreen.html';
+            }, 500);
         }
 
         function goToChatScreen() {
